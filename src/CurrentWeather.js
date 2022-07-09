@@ -1,34 +1,63 @@
-import React from "react";
+import React from 'react';
 import "./CurrentWeather.css";
 
 export default function CurrentWeather(props) {
-  return (
-    <div className="weatherTodayWrap">
-      <div className="weatherTodayContainer">
-        <div className="weatherPositioning">
-          <div className="leftBox">
-            <h2>{props.name}</h2>
-            <p>Thu, 7 June</p>
-          </div>
-          <div className="centralBox">
-            <h1>😬</h1>
-          </div>
-          <div className="rightBox">
-            <h2>
-              <span className="temperature">28</span>
-              <span className="temperature-scale">℃</span>
-            </h2>
-            <p>
-              Wind: <span></span> km/h
-              <br />
-              Max: <span className="temperature"></span>
-              <span className="temperature-scale">°C</span> | Min:
-              <span className="temperature"></span>
-              <span className="temperature-scale">°C</span>
-            </p>
-          </div>
+    let imgSrc = `https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
+    let months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    function currentTime(){
+      let now = new Date();
+      let dt = new Date((new Date().getTime())+(props.weather.timezone+(now.getTimezoneOffset()*60))*1000)
+      let day = days[dt.getDay()];
+      let month = months[dt.getMonth()];
+      let minutes=dt.getMinutes();
+      let houres = dt.getHours();
+      if (minutes<10){
+        minutes = `0${minutes}`;
+      }
+      if(houres<10){
+        houres = `0${houres}`;
+      }
+      return (`${day}, ${dt.getDate()} ${month} ${houres}:${minutes}`);  
+    }
+    return <div className="weatherTodayWrap">
+    <div className="weatherTodayContainer">
+      <div className="weatherPositioning">
+        <div className="leftBox">
+          <h2>{props.weather.name}</h2>
+          <p>Local time:<br/>{currentTime()}</p>
+        </div>
+        <div className="centralBox">
+          <h1><img src = {imgSrc} alt={props.weather.weather[0].main} width={80}/></h1>
+        </div>
+        <div className="rightBox">
+          <h2>
+            <span className="temperature">{Math.round(props.weather.main.temp)}</span>
+            <span className="temperature-scale">℃</span>
+          </h2>
+          <p>
+            Wind: <span></span>{Math.round(props.weather.wind.speed)} km/h
+            <br />
+            Max: <span className="temperature">{Math.round(props.weather.main.temp_max)}</span>
+            <span className="temperature-scale">°C</span> | Min:
+            <span className="temperature">{Math.round(props.weather.main.temp_min)}</span>
+            <span className="temperature-scale">°C</span>
+          </p>
         </div>
       </div>
     </div>
-  );
+  </div>
 }

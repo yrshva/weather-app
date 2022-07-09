@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
+import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
 import "./Search.css";
 
-export default function Search() {
-  let [city, setCity] = useState("");
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    alert("");
+export default function Search() {
+  let [city, setCity] = useState(null);
+  let [weatherData, setWeatherData] = useState(null);
+
+  function showCurrentLocation() {
+    fetch("https://extreme-ip-lookup.com/json/?key=RwmHPc7UO6BPu8h9UQkb")
+      .then((res) => res.json())
+      .then((response) => {  
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${response.city}&appid=c558530bb05c403b5dd2f204254ec041&units=metric`;
+        axios.get(apiUrl).then(showWeatherData);
+        
+      })
+  }
+  function showWeatherData(response) {
+    setWeatherData(response.data);
   }
   function updateCity(event) {
-    event.preventDefault();
     setCity(event.target.value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=c558530bb05c403b5dd2f204254ec041&units=metric`;
+    axios.get(apiUrl).then(showWeatherData);
+    axios.get(apiUrl).catch((data, status) => {
+      alert("Please type correct city");
+      showCurrentLocation();
+    });
+  }
+  function showWeather(){
+    if (weatherData){
+      return <CurrentWeather weather={weatherData}/>
+    }
+    else{
+      showCurrentLocation();
+    }
+  }
   return (
     <div>
       <div className="searchBox">
@@ -34,7 +61,7 @@ export default function Search() {
           <a href="/">Show current location weather</a>
         </form>
       </div>
-      <CurrentWeather name={city} />;
+      {showWeather()}
     </div>
   );
 }
