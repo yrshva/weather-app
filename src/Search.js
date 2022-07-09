@@ -22,7 +22,7 @@ export default function Search() {
           <span> | </span>
           <a href="/">C</a>
         </div>
-        <form autocomplete="off" onSubmit={handleSubmit}>
+        <form autoComplete="off" onSubmit={handleSubmit}>
           <input
             className="searchField"
             type="text"
