@@ -5,42 +5,53 @@ import "./Search.css";
 
 
 export default function Search() {
+  const apiKey = "30c3a3303bd26fe4b2e43dfa4aeb5999";
   let [city, setCity] = useState(null);
-  let [weatherData, setWeatherData] = useState(null);
+  let [weatherData, setWeatherData] = useState({ready: false });
+  function showWeatherData(response) {
+    setWeatherData({
+      ready: true,
+      name: response.data.name,
+      temperature: response.data.main.temp,
+      wind: response.data.wind.speed,
+      temp_min: response.data.main.temp_min,
+      temp_max: response.data.main.temp_max,
+      timezone: response.data.timezone,
+      icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      description: response.data.weather[0].description
+    });
+  }
+  console.log(weatherData);
 
+  function getWeatherData(city){
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showWeatherData);
+    axios.get(apiUrl).catch((data, status) => {
+      alert("Please type correct city");
+    });
+  }
   function showCurrentLocation() {
     fetch("https://extreme-ip-lookup.com/json/?key=RwmHPc7UO6BPu8h9UQkb")
       .then((res) => res.json())
       .then((response) => {  
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${response.city}&appid=c558530bb05c403b5dd2f204254ec041&units=metric`;
-        axios.get(apiUrl).then(showWeatherData);
+        getWeatherData(response.city);
       })
+      .catch((data, status) => {
+        alert("Something went wrong");
+      });
   }
-  function showWeatherData(response) {
-    setWeatherData(response.data);
-  }
+  
   function updateCity(event) {
     setCity(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=c558530bb05c403b5dd2f204254ec041&units=metric`;
-    axios.get(apiUrl).then(showWeatherData);
-    axios.get(apiUrl).catch((data, status) => {
-      alert("Please type correct city");
-      showCurrentLocation();
-    });
+    getWeatherData(city);
   }
-  function showWeather(){
-    if (weatherData){
-      return <CurrentWeather weather={weatherData}/>
-    }
-    else{
-      showCurrentLocation();
-    }
-  }
-  return (
+  
+  if (weatherData.ready) {
+    return (
     <div>
       <div className="searchBox">
         <div className="scale">
@@ -60,7 +71,12 @@ export default function Search() {
           <a href="/">Show current location weather</a>
         </form>
       </div>
-      {showWeather()}
+      <CurrentWeather weather={weatherData}/>
     </div>
   );
+}else{
+  showCurrentLocation();
+  return "Loading...";
+}
+
 }

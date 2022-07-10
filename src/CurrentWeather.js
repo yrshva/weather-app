@@ -2,7 +2,6 @@ import React from 'react';
 import "./CurrentWeather.css";
 
 export default function CurrentWeather(props) {
-    let imgSrc = `https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
     let months = [
       "Jan",
       "Feb",
@@ -41,19 +40,19 @@ export default function CurrentWeather(props) {
           <p>Local time:<br/>{currentTime()}</p>
         </div>
         <div className="centralBox">
-          <h1><img src = {imgSrc} alt={props.weather.weather[0].main} width={80}/></h1>
+          <h1><img src = {props.weather.icon} alt={props.weather.description} width={80}/></h1>
         </div>
         <div className="rightBox">
           <h2>
-            <span className="temperature">{Math.round(props.weather.main.temp)}</span>
+            <span className="temperature">{Math.round(props.weather.temperature)}</span>
             <span className="temperature-scale">℃</span>
           </h2>
           <p>
-            Wind: <span></span>{Math.round(props.weather.wind.speed)} km/h
+            Wind: <span></span>{Math.round(props.weather.wind)} km/h
             <br />
-            Max: <span className="temperature">{Math.round(props.weather.main.temp_max)}</span>
+            Max: <span className="temperature">{Math.round(props.weather.temp_max)}</span>
             <span className="temperature-scale">°C</span> | Min:
-            <span className="temperature">{Math.round(props.weather.main.temp_min)}</span>
+            <span className="temperature">{Math.round(props.weather.temp_min)}</span>
             <span className="temperature-scale">°C</span>
           </p>
         </div>
