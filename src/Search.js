@@ -21,7 +21,6 @@ export default function Search() {
       description: response.data.weather[0].description
     });
   }
-  console.log(weatherData);
 
   function getWeatherData(city){
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
