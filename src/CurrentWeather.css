@@ -13,7 +13,7 @@
 .weatherPositioning {
   display: block;
   margin: auto;
-  width: 75%;
+  width: 85%;
 }
 .leftBox {
   float: left;
@@ -21,9 +21,9 @@
 .leftBox h2 {
   font-weight: 500;
   text-transform: capitalize;
-  margin-bottom: 0;
 }
 .leftBox p {
+  margin-top: 0;
   font-weight: 400;
   color: #5a6275;
   font-size: 14px;
@@ -34,13 +34,13 @@
 }
 .rightBox h2 {
   font-weight: 500;
-  margin-bottom: 0;
 }
 .rightBox {
   text-align: right;
 }
 .rightBox p {
   color: #5a6275;
+  margin-top: 0;
   font-size: 14px;
   line-height: 16px;
 }
@@ -54,7 +54,7 @@
   opacity: 80%;
   position: absolute;
   z-index: -1;
-  margin-top: -15px;
+  margin-top: -10px;
 }
 @media (max-width: 450px) {
   .weatherTodayContainer {

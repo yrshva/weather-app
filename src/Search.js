@@ -14,7 +14,6 @@ export default function Search() {
       .then((response) => {  
         let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${response.city}&appid=c558530bb05c403b5dd2f204254ec041&units=metric`;
         axios.get(apiUrl).then(showWeatherData);
-        
       })
   }
   function showWeatherData(response) {
