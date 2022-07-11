@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, CSSProperties } from 'react';
 import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
+import ClipLoader from "react-spinners/ClipLoader";
 import "./Search.css";
 
 
@@ -47,6 +48,7 @@ export default function Search() {
   function handleSubmit(event) {
     event.preventDefault();
     getWeatherData(city);
+    setCity("");
   }
   
   if (weatherData.ready) {
@@ -64,6 +66,7 @@ export default function Search() {
             type="text"
             placeholder="Enter the city"
             onChange={updateCity}
+            value={city}
           />
           <input className="searchButton" type="submit" value="Search" />
           <br />
@@ -75,7 +78,8 @@ export default function Search() {
   );
 }else{
   showCurrentLocation();
-  return "Loading...";
+  return "Loading.."
+
 }
 
 }
