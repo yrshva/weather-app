@@ -1,11 +1,19 @@
 import React, {useState, CSSProperties } from 'react';
+import GridLoader from "react-spinners/GridLoader";
 import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
-import ClipLoader from "react-spinners/ClipLoader";
 import "./Search.css";
 
 
 export default function Search() {
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+    position: "relative",
+    top: "50%",
+    transform: "translateY(-50%)"
+  };
   const apiKey = "30c3a3303bd26fe4b2e43dfa4aeb5999";
   let [city, setCity] = useState(null);
   let [weatherData, setWeatherData] = useState({ready: false });
@@ -18,7 +26,7 @@ export default function Search() {
       temp_min: response.data.main.temp_min,
       temp_max: response.data.main.temp_max,
       timezone: response.data.timezone,
-      icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      icon: response.data.weather[0].icon,
       description: response.data.weather[0].description
     });
   }
@@ -78,8 +86,9 @@ export default function Search() {
   );
 }else{
   showCurrentLocation();
-  return "Loading.."
-
+  return <div style={{width:"100%", height:"100vh"}}>
+    <GridLoader color={"#a8d3f7"} loading={true} cssOverride={override} size={30} />
+    </div>
 }
 
 }

@@ -51,7 +51,6 @@
 }
 
 .centralBox h1 {
-  opacity: 80%;
   position: absolute;
   z-index: -1;
   margin-top: -10px;

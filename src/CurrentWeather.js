@@ -1,5 +1,7 @@
 import React from 'react';
+import WeatherIcon from './WeatherIcon';
 import "./CurrentWeather.css";
+
 
 export default function CurrentWeather(props) {
     let months = [
@@ -40,7 +42,7 @@ export default function CurrentWeather(props) {
           <p>Local time:<br/>{currentTime()}</p>
         </div>
         <div className="centralBox">
-          <h1><img src = {props.weather.icon} alt={props.weather.description} width={80}/></h1>
+          <h1><WeatherIcon icon={props.weather.icon} description={props.weather.description}/></h1>
         </div>
         <div className="rightBox">
           <h2>
