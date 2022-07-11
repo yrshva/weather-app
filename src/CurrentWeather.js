@@ -34,6 +34,10 @@ export default function CurrentWeather(props) {
       }
       return (`${day}, ${dt.getDate()} ${month} ${houres}:${minutes}`);  
     }
+    const unitsMapping = {
+      "imperial": "°F",
+      "metric": "°C"
+    }
     return <div className="weatherTodayWrap">
     <div className="weatherTodayContainer">
       <div className="weatherPositioning">
@@ -47,15 +51,15 @@ export default function CurrentWeather(props) {
         <div className="rightBox">
           <h2>
             <span className="temperature">{Math.round(props.weather.temperature)}</span>
-            <span className="temperature-scale">℃</span>
+            <span className="temperature-scale">{unitsMapping[props.units]}</span>
           </h2>
           <p>
             Wind: <span></span>{Math.round(props.weather.wind)} km/h
             <br />
             Max: <span className="temperature">{Math.round(props.weather.temp_max)}</span>
-            <span className="temperature-scale">°C</span> | Min:
+            <span className="temperature-scale">{unitsMapping[props.units]}</span> | Min:
             <span className="temperature">{Math.round(props.weather.temp_min)}</span>
-            <span className="temperature-scale">°C</span>
+            <span className="temperature-scale">{unitsMapping[props.units]}</span>
           </p>
         </div>
       </div>

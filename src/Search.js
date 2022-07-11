@@ -15,6 +15,7 @@ export default function Search() {
     transform: "translateY(-50%)"
   };
   const apiKey = "30c3a3303bd26fe4b2e43dfa4aeb5999";
+  let [units, setUnits] = useState("metric");
   let [city, setCity] = useState(null);
   let [weatherData, setWeatherData] = useState({ready: false });
   function showWeatherData(response) {
@@ -31,22 +32,28 @@ export default function Search() {
     });
   }
 
-  function getWeatherData(city){
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  function getWeatherData(){
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(showWeatherData);
     axios.get(apiUrl).catch((data, status) => {
       alert("Please type correct city");
     });
+
+  }
+  function showCity(response){
+    setCity(response.data.city);
+    if(city){
+      getWeatherData();
+    }
+    
   }
   function showCurrentLocation() {
-    fetch("https://extreme-ip-lookup.com/json/?key=RwmHPc7UO6BPu8h9UQkb")
-      .then((res) => res.json())
-      .then((response) => {  
-        getWeatherData(response.city);
-      })
-      .catch((data, status) => {
-        alert("Something went wrong");
-      });
+    let apiKey = `RwmHPc7UO6BPu8h9UQkb`;
+    let apiUrl = `https://extreme-ip-lookup.com/json/?key=${apiKey}`
+    axios.get(apiUrl).then(showCity);
+    axios.get(apiUrl).catch((data, status) => {
+      alert("Something went wrong");
+    });
   }
   
   function updateCity(event) {
@@ -55,18 +62,26 @@ export default function Search() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    getWeatherData(city);
-    setCity("");
+    getWeatherData();
   }
-  
+  function showFahrenheit (event){
+    event.preventDefault();
+    setUnits("imperial");
+    getWeatherData();
+  }
+  function showCelsius (event){
+    event.preventDefault();
+    setUnits("metric");
+    getWeatherData();
+  }
   if (weatherData.ready) {
     return (
     <div>
       <div className="searchBox">
         <div className="scale">
-          <a href="/">F</a>
+          <a href="/" onClick={showFahrenheit}>°F</a>
           <span> | </span>
-          <a href="/">C</a>
+          <a href="/" onClick={showCelsius}>°C</a>
         </div>
         <form autoComplete="off" onSubmit={handleSubmit}>
           <input
@@ -74,14 +89,13 @@ export default function Search() {
             type="text"
             placeholder="Enter the city"
             onChange={updateCity}
-            value={city}
           />
           <input className="searchButton" type="submit" value="Search" />
           <br />
           <a href="/">Show current location weather</a>
         </form>
       </div>
-      <CurrentWeather weather={weatherData}/>
+      <CurrentWeather weather={weatherData} units={units}/>
     </div>
   );
 }else{
