@@ -39,6 +39,16 @@ export default function CurrentWeather(props) {
       "imperial": "°F",
       "metric": "°C"
     }
+    let temp = Math.round(props.weather.temperature);
+    let temp_min = Math.round(props.weather.temp_min);
+    let temp_max = Math.round(props.weather.temp_max);
+    if(props.units==="imperial"){
+      temp = Math.round(temp*1.8+32);
+      temp_min = Math.round(temp_min*1.8+32);
+      temp_max = Math.round(temp_max*1.8+32);
+    }
+    
+    
     return <div className="weatherTodayWrap">
     <div className="weatherTodayContainer">
       <div className="weatherPositioning">
@@ -51,15 +61,15 @@ export default function CurrentWeather(props) {
         </div>
         <div className="rightBox">
           <h2>
-            <span className="temperature">{Math.round(props.weather.temperature)}</span>
+            <span className="temperature">{temp}</span>
             <span className="temperature-scale">{unitsMapping[props.units]}</span>
           </h2>
           <p>
             Wind: <span></span>{Math.round(props.weather.wind)} km/h
             <br />
-            Max: <span className="temperature">{Math.round(props.weather.temp_max)}</span>
+            Max: <span className="temperature">{temp_max}</span>
             <span className="temperature-scale">{unitsMapping[props.units]}</span> | Min:
-            <span className="temperature"> {Math.round(props.weather.temp_min)}</span>
+            <span className="temperature"> {temp_min}</span>
             <span className="temperature-scale">{unitsMapping[props.units]}</span>
           </p>
         </div>

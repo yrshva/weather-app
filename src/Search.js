@@ -15,8 +15,7 @@ export default function Search() {
     transform: "translateY(-50%)"
   };
   let [city, setCity] = useState(null);
-  let units= "metric";
-  let [unitButton, setUnitButton] = useState("metric");
+  let [units, setUnits] = useState("metric");
   let [weatherData, setWeatherData] = useState({ready: false });
   function showWeatherData(response) {
     setWeatherData({
@@ -64,15 +63,11 @@ export default function Search() {
   }
   function showFahrenheit (event){
     event.preventDefault();
-    units="imperial";
-    setUnitButton("imperial");
-    getWeatherData();
+    setUnits("imperial");
   }
   function showCelsius (event){
     event.preventDefault();
-    units="metric";
-    setUnitButton("metric");
-    getWeatherData();
+    setUnits("metric");
   }
   if (weatherData.ready) {
     return (
@@ -95,7 +90,7 @@ export default function Search() {
           <a href="/">Show current location weather</a>
         </form>
       </div>
-      <CurrentWeather weather={weatherData} units={unitButton}/>
+      <CurrentWeather weather={weatherData} units={units}/>
     </div>
   );
 }else{
