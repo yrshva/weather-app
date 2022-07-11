@@ -4,6 +4,7 @@ import "./CurrentWeather.css";
 
 
 export default function CurrentWeather(props) {
+  console.log(props.units);
     let months = [
       "Jan",
       "Feb",
@@ -58,7 +59,7 @@ export default function CurrentWeather(props) {
             <br />
             Max: <span className="temperature">{Math.round(props.weather.temp_max)}</span>
             <span className="temperature-scale">{unitsMapping[props.units]}</span> | Min:
-            <span className="temperature">{Math.round(props.weather.temp_min)}</span>
+            <span className="temperature"> {Math.round(props.weather.temp_min)}</span>
             <span className="temperature-scale">{unitsMapping[props.units]}</span>
           </p>
         </div>

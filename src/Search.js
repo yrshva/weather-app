@@ -14,9 +14,9 @@ export default function Search() {
     top: "50%",
     transform: "translateY(-50%)"
   };
-  const apiKey = "30c3a3303bd26fe4b2e43dfa4aeb5999";
-  let [units, setUnits] = useState("metric");
   let [city, setCity] = useState(null);
+  let units= "metric";
+  let [unitButton, setUnitButton] = useState("metric");
   let [weatherData, setWeatherData] = useState({ready: false });
   function showWeatherData(response) {
     setWeatherData({
@@ -33,11 +33,9 @@ export default function Search() {
   }
 
   function getWeatherData(){
+    const apiKey = "c558530bb05c403b5dd2f204254ec041";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(showWeatherData);
-    axios.get(apiUrl).catch((data, status) => {
-      alert("Please type correct city");
-    });
 
   }
   function showCity(response){
@@ -66,12 +64,14 @@ export default function Search() {
   }
   function showFahrenheit (event){
     event.preventDefault();
-    setUnits("imperial");
+    units="imperial";
+    setUnitButton("imperial");
     getWeatherData();
   }
   function showCelsius (event){
     event.preventDefault();
-    setUnits("metric");
+    units="metric";
+    setUnitButton("metric");
     getWeatherData();
   }
   if (weatherData.ready) {
@@ -95,7 +95,7 @@ export default function Search() {
           <a href="/">Show current location weather</a>
         </form>
       </div>
-      <CurrentWeather weather={weatherData} units={units}/>
+      <CurrentWeather weather={weatherData} units={unitButton}/>
     </div>
   );
 }else{
