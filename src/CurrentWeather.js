@@ -4,7 +4,6 @@ import "./CurrentWeather.css";
 
 
 export default function CurrentWeather(props) {
-  console.log(props.units);
     let months = [
       "Jan",
       "Feb",
@@ -50,30 +49,30 @@ export default function CurrentWeather(props) {
     
     
     return <div className="weatherTodayWrap">
-    <div className="weatherTodayContainer">
-      <div className="weatherPositioning">
-        <div className="leftBox">
-          <h2>{props.weather.name}</h2>
-          <p>Local time:<br/>{currentTime()}</p>
-        </div>
-        <div className="centralBox">
-          <h1><WeatherIcon icon={props.weather.icon} description={props.weather.description}/></h1>
-        </div>
-        <div className="rightBox">
-          <h2>
-            <span className="temperature">{temp}</span>
-            <span className="temperature-scale">{unitsMapping[props.units]}</span>
-          </h2>
-          <p>
-            Wind: <span></span>{Math.round(props.weather.wind)} km/h
-            <br />
-            Max: <span className="temperature">{temp_max}</span>
-            <span className="temperature-scale">{unitsMapping[props.units]}</span> | Min:
-            <span className="temperature"> {temp_min}</span>
-            <span className="temperature-scale">{unitsMapping[props.units]}</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+            <div className="weatherTodayContainer">
+              <div className="weatherPositioning">
+                <div className="leftBox">
+                  <h2>{props.weather.name}</h2>
+                  <p>Local time:<br/>{currentTime()}</p>
+                </div>
+                <div className="centralBox">
+                  <h1><WeatherIcon icon={props.weather.icon} color={"#a8d3f7"} size={70}/></h1>
+                </div>
+                <div className="rightBox">
+                  <h2>
+                    <span className="temperature">{temp}</span>
+                    <span className="temperature-scale">{unitsMapping[props.units]}</span>
+                  </h2>
+                  <p>
+                    Wind: <span></span>{Math.round(props.weather.wind)} km/h
+                    <br />
+                    Max: <span className="temperature">{temp_max}</span>
+                    <span className="temperature-scale">{unitsMapping[props.units]}</span> | Min:
+                    <span className="temperature"> {temp_min}</span>
+                    <span className="temperature-scale">{unitsMapping[props.units]}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 }

@@ -17,12 +17,10 @@
 h2 {
   display: inline;
   font-weight: 300;
-  font-size: 20px;
 }
-.clouds-emoji {
-  opacity: 80%;
+.weather-icon {
   float: right;
-  margin-top: -20px;
+  margin-top: -5px;
   margin-left: 5px;
   position: absolute;
 }

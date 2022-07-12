@@ -2,14 +2,15 @@ import React, {useState, CSSProperties } from 'react';
 import GridLoader from "react-spinners/GridLoader";
 import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
+import Forecast from './Forecast';
 import "./Search.css";
+
 
 
 export default function Search() {
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
-    borderColor: "red",
     position: "relative",
     top: "50%",
     transform: "translateY(-50%)"
@@ -20,6 +21,7 @@ export default function Search() {
   function showWeatherData(response) {
     setWeatherData({
       ready: true,
+      coordinates: response.data.coord,
       name: response.data.name,
       temperature: response.data.main.temp,
       wind: response.data.wind.speed,
@@ -30,19 +32,16 @@ export default function Search() {
       description: response.data.weather[0].description
     });
   }
-
   function getWeatherData(){
     const apiKey = "c558530bb05c403b5dd2f204254ec041";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(apiUrl).then(showWeatherData);
-
   }
   function showCity(response){
     setCity(response.data.city);
     if(city){
       getWeatherData();
     }
-    
   }
   function showCurrentLocation() {
     let apiKey = `RwmHPc7UO6BPu8h9UQkb`;
@@ -52,11 +51,9 @@ export default function Search() {
       alert("Something went wrong");
     });
   }
-  
   function updateCity(event) {
     setCity(event.target.value);
   }
-
   function handleSubmit(event) {
     event.preventDefault();
     getWeatherData();
@@ -91,6 +88,7 @@ export default function Search() {
         </form>
       </div>
       <CurrentWeather weather={weatherData} units={units}/>
+      <Forecast coordinates={weatherData.coordinates} units={units}/>
     </div>
   );
 }else{
@@ -99,5 +97,4 @@ export default function Search() {
     <GridLoader color={"#a8d3f7"} loading={true} cssOverride={override} size={30} />
     </div>
 }
-
 }
