@@ -15,13 +15,13 @@ export default function Search() {
     top: "50%",
     transform: "translateY(-50%)"
   };
-  let [input, setInput] = useState(null);
+  let [input, setInput] = useState('');
   let [city, setCity] = useState(null);
   let [units, setUnits] = useState("metric");
-  let [weatherData, setWeatherData] = useState({ready: false });
+  let [loaded, setLoaded] = useState(false);
+  let [weatherData, setWeatherData] = useState(null);
   function showWeatherData(response) {
     setWeatherData({
-      ready: true,
       coordinates: response.data.coord,
       name: response.data.name,
       temperature: response.data.main.temp,
@@ -32,11 +32,16 @@ export default function Search() {
       icon: response.data.weather[0].icon,
       description: response.data.weather[0].description
     });
+    setLoaded(true);
   }
   function getWeatherData(){
     const apiKey = "c558530bb05c403b5dd2f204254ec041";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(showWeatherData);
+    axios.get(apiUrl).catch((data,status)=>{
+      alert("Please enter correct city");
+      setLoaded(false);
+    })
   }
   function showCity(response){
     setCity(response.data.city);
@@ -55,8 +60,7 @@ export default function Search() {
   function handleSubmit(event) {
     event.preventDefault();
     setCity(input);
-    setInput("");
-    
+    setInput('');
   }
   function handleCurrentLocation(event){
     event.preventDefault();
@@ -73,11 +77,13 @@ export default function Search() {
   useEffect(()=>{
     setTimeout(()=>{
       if(city!=null){
-        getWeatherData();}
+        getWeatherData();
+      }else{
+        showCurrentLocation();
+      }
     },500)   
   }, [city])
-
-  if (weatherData.ready) {
+  if (loaded) {
     return (
     <div>
       <div className="searchBox">
@@ -104,7 +110,6 @@ export default function Search() {
     </div>
   );
 }else{
-  showCurrentLocation();
   return <div style={{width:"100%", height:"100vh"}}>
     <GridLoader color={"#a8d3f7"} loading={true} cssOverride={override} size={30} />
     </div>
