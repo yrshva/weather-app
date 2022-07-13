@@ -55,6 +55,12 @@ export default function Search() {
   function handleSubmit(event) {
     event.preventDefault();
     setCity(input);
+    setInput("");
+    
+  }
+  function handleCurrentLocation(event){
+    event.preventDefault();
+    showCurrentLocation();
   }
   function showFahrenheit (event){
     event.preventDefault();
@@ -86,10 +92,11 @@ export default function Search() {
             type="text"
             placeholder="Enter the city"
             onChange={updateInput}
+            value={input}
           />
           <input className="searchButton" type="submit" value="Search" />
           <br />
-          <a href="/">Show current location weather</a>
+          <a href="/" onClick={handleCurrentLocation}>Show current location weather</a>
         </form>
       </div>
       <CurrentWeather weather={weatherData} units={units}/>
