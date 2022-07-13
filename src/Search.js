@@ -1,4 +1,4 @@
-import React, {useState, CSSProperties } from 'react';
+import React, {useState, CSSProperties, useEffect } from 'react';
 import GridLoader from "react-spinners/GridLoader";
 import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
@@ -15,6 +15,7 @@ export default function Search() {
     top: "50%",
     transform: "translateY(-50%)"
   };
+  let [input, setInput] = useState(null);
   let [city, setCity] = useState(null);
   let [units, setUnits] = useState("metric");
   let [weatherData, setWeatherData] = useState({ready: false });
@@ -39,24 +40,21 @@ export default function Search() {
   }
   function showCity(response){
     setCity(response.data.city);
-    if(city){
-      getWeatherData();
-    }
   }
   function showCurrentLocation() {
     let apiKey = `RwmHPc7UO6BPu8h9UQkb`;
     let apiUrl = `https://extreme-ip-lookup.com/json/?key=${apiKey}`
-    axios.get(apiUrl).then(showCity);
+    axios.get(apiUrl).then((showCity));
     axios.get(apiUrl).catch((data, status) => {
-      alert("Something went wrong");
+      console.log("Something went wrong");
     });
   }
-  function updateCity(event) {
-    setCity(event.target.value);
+  function updateInput(event) {
+    setInput(event.target.value);
   }
   function handleSubmit(event) {
     event.preventDefault();
-    getWeatherData();
+    setCity(input);
   }
   function showFahrenheit (event){
     event.preventDefault();
@@ -66,6 +64,13 @@ export default function Search() {
     event.preventDefault();
     setUnits("metric");
   }
+  useEffect(()=>{
+    if(city!=null){
+      getWeatherData();}
+  }, [city])
+  useEffect(()=>{
+    
+  })
   if (weatherData.ready) {
     return (
     <div>
@@ -80,7 +85,7 @@ export default function Search() {
             className="searchField"
             type="text"
             placeholder="Enter the city"
-            onChange={updateCity}
+            onChange={updateInput}
           />
           <input className="searchButton" type="submit" value="Search" />
           <br />

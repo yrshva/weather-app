@@ -1,10 +1,9 @@
-import React, {useState, CSSProperties} from 'react';
+import React, {useState, useEffect, CSSProperties} from 'react';
 import axios from 'axios';
 import GridLoader from "react-spinners/GridLoader";
 import ForecastDay from "./ForecastDay"
 
 import "./Forecast.css";
-
 export default function Forecast(props) {
   const override: CSSProperties = {
     display: "block",
@@ -15,16 +14,18 @@ export default function Forecast(props) {
   };
   let [forecastData,setForecastData]=useState(null);
   let [loaded, setLoaded]=useState(false);
+  useEffect(()=>{
+    setLoaded(false)
+;  },[props.coordinates])
   function showForecast(response){
     setForecastData(response.data.daily);
     setLoaded(true);
   }
   if(loaded){
     return <div className="container">
-          <div class="row d-flex justify-content-center">
+          <div className="row d-flex justify-content-center">
             {forecastData.map(function (dailyForecast,index){
               if(index>0){
-                console.log(dailyForecast);
                 return <ForecastDay data={dailyForecast} units={props.units}/>
               }else return null;
             })}
@@ -33,7 +34,6 @@ export default function Forecast(props) {
   }else {
     let apiKey = "c558530bb05c403b5dd2f204254ec041"
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${props.coordinates.lat}&lon=${props.coordinates.lon}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=${props.units}`
-    console.log("API URL", apiUrl);
     axios.get(apiUrl).then(showForecast);
     axios.get(apiUrl).catch((data, status) => {
       console.log("Something went wrong");
