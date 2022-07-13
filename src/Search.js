@@ -35,7 +35,7 @@ export default function Search() {
   }
   function getWeatherData(){
     const apiKey = "c558530bb05c403b5dd2f204254ec041";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(showWeatherData);
   }
   function showCity(response){
@@ -71,12 +71,12 @@ export default function Search() {
     setUnits("metric");
   }
   useEffect(()=>{
-    if(city!=null){
-      getWeatherData();}
+    setTimeout(()=>{
+      if(city!=null){
+        getWeatherData();}
+    },500)   
   }, [city])
-  useEffect(()=>{
-    
-  })
+
   if (weatherData.ready) {
     return (
     <div>

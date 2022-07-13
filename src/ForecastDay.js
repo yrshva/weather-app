@@ -41,7 +41,7 @@ export default function ForecastDay(props){
                 <span className="temperature forecast-temp">{temp}</span
                 ><span className="temperature-scale">{unitsMapping[props.units]}</span>
               </h2>
-              <h1 className="weather-icon"><WeatherIcon icon={props.data.weather[0].icon} color={"#BFB48F"} size={40} /></h1>
+              <span className="weather-icon"><WeatherIcon icon={props.data.weather[0].icon} color={"#BFB48F"} size={40} /></span>
               <p>
                 Max: {temp_max}<span className="temperature-scale">{unitsMapping[props.units]}</span> <br />
 
