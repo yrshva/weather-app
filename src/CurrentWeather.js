@@ -56,7 +56,7 @@ export default function CurrentWeather(props) {
                   <p>Local time:<br/>{currentTime()}</p>
                 </div>
                 <div className="centralBox">
-                  <h1><WeatherIcon icon={props.weather.icon} color={"#a8d3f7"} size={70}/></h1>
+                  <h1><WeatherIcon icon={props.weather.icon} color={"#a8d3f7"} size={50}/></h1>
                 </div>
                 <div className="rightBox">
                   <h2>

@@ -21,13 +21,12 @@ export default function Forecast(props) {
       getForecast();
   },1000)},[forecastData])
   function showForecast(response){
-    console.log("you made forecast api request");
     setForecastData(response.data.daily);
     setLoaded(true);
 
   }
   function getForecast(){
-    let apiKey = "5a9af408b5fd058bec3299087478c87e"
+    let apiKey = "819b905dc7384ff963607b64afbc6c58"
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${props.coordinates.lat}&lon=${props.coordinates.lon}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=metric`
     axios.get(apiUrl).then(showForecast);
     axios.get(apiUrl).catch((data, status) => {
