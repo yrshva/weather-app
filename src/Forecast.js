@@ -19,7 +19,6 @@ export default function Forecast(props) {
   useEffect(()=>{
     setTimeout(()=>{
       getForecast();
-
   },1000)},[forecastData])
   function showForecast(response){
     setForecastData(response.data.daily);
