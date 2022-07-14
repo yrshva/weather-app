@@ -1,10 +1,8 @@
 import React, {useState, CSSProperties, useEffect } from 'react';
 import GridLoader from "react-spinners/GridLoader";
-import DatalistInput from 'react-datalist-input';
 import axios from "axios";
 import CurrentWeather from "./CurrentWeather";
 import Forecast from './Forecast';
-import 'react-datalist-input/dist/styles.css';
 import "./Search.css";
 
 

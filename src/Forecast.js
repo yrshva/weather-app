@@ -38,7 +38,7 @@ export default function Forecast(props) {
           <div className="row d-flex justify-content-center">
             {forecastData.map(function (dailyForecast,index){
               if(index>0){
-                return <ForecastDay key={index} data={dailyForecast} units={props.units}/>
+                return <ForecastDay data={dailyForecast} units={props.units}/>
               }else return null;
             })}
         </div>
