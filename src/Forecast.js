@@ -21,8 +21,10 @@ export default function Forecast(props) {
       getForecast();
   },1000)},[forecastData])
   function showForecast(response){
+    console.log("you made forecast api request");
     setForecastData(response.data.daily);
     setLoaded(true);
+
   }
   function getForecast(){
     let apiKey = "5a9af408b5fd058bec3299087478c87e"

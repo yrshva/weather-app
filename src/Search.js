@@ -21,6 +21,7 @@ export default function Search() {
   let [loaded, setLoaded] = useState(false);
   let [weatherData, setWeatherData] = useState(null);
   function showWeatherData(response) {
+    console.log("you made current weather api request");
     setWeatherData({
       coordinates: response.data.coord,
       name: response.data.name,
